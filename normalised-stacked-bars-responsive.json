@@ -1,0 +1,68 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Average Weekly Salary (2010-2021)",
+  "width": 550,
+  "height": 350,
+  "title": "Average Weekly Salary (2010-2021)",
+  "data": {"url":
+"https://raw.githubusercontent.com/yxuu0066/FIT3179_HW10/main/average%20weekly%20salary.csv"},
+
+
+  "params": [
+{
+"name": "Year_Above",
+"value": 2010,
+"bind": {
+  "input": "range",
+    "min": 2010,
+    "max": 2021,
+    "step": 1,
+    "name": "Year Slider Min:"
+} },
+{
+"name": "Year_Below",
+"value": 2021,
+"bind": {
+  "input": "range",
+    "min": 2010,
+    "max": 2021,
+    "step": 1,
+    "name": "Year Slider Max:"
+} }],
+
+"transform": [
+{"filter": "datum.Year > Year_Above"},
+{"filter": "datum.Year < Year_Below"}],
+
+"selection": {
+      "continent_highlight": {
+        "type": "multi",
+"fields": ["Category"],
+    "bind": "legend"
+  }
+},
+
+
+  "mark": {
+    "type": "line",
+    "point": {
+      "filled": false,
+      "fill": "white"
+    }
+  },
+  "encoding": {
+    "x": {"field": "Year","type": "quantitative"},
+    "y": {"field": "Average weekly salary", "type": "quantitative"},
+    "color": {"field": "Category", "type": "nominal"},
+    "opacity": {
+      "condition": {"selection": "continent_highlight", "value": 1},
+      "value": 0.2
+},
+      "tooltip": [
+      {"field": "Category", "type": "nominal"},
+      {"field": "Year", "type": "quantitative", "format": ","},       
+      {"field": "Average weekly salary", "type": "quantitative", "format": ","} 
+]
+  }
+
+}
